@@ -102,7 +102,7 @@ You can set these variables through the command line options as shown in the usa
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/karimz1/aws-authentication-tool.git
+   git clone https://github.com/karimz1/AWS-Service-Authentication-Tool.git
    cd aws-authentication-tool
    ```
 
