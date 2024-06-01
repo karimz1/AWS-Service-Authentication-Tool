@@ -2,9 +2,9 @@
 using Amazon;
 using Amazon.CodeArtifact;
 using Amazon.CodeArtifact.Model;
-using AwsTokenRefresher.Core.Interfaces;
+using AwsServiceAuthenticator.Core.Interfaces;
 
-namespace AwsTokenRefresher.Commands;
+namespace AwsServiceAuthenticator.Commands;
 
 public class NuGetAuthCommand : ICommand
 {

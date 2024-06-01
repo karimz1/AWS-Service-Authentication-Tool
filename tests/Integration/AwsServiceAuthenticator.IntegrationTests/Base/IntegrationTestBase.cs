@@ -1,10 +1,10 @@
-using AwsTokenRefresher.Commands;
-using AwsTokenRefresher.Core.Interfaces;
-using AwsTokenRefresher.Infrastructure.Services;
+using AwsServiceAuthenticator.Commands;
+using AwsServiceAuthenticator.Core.Interfaces;
+using AwsServiceAuthenticator.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
-namespace AwsTokenRefresher.Tests.Base;
+namespace AwsServiceAuthenticator.IntegrationTests.Base;
 
 public abstract class IntegrationTestBase
 {

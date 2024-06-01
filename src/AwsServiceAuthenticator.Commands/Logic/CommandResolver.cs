@@ -1,6 +1,6 @@
-﻿using AwsTokenRefresher.Core.Interfaces;
+﻿using AwsServiceAuthenticator.Core.Interfaces;
 
-namespace AwsTokenRefresher.Commands.Logic;
+namespace AwsServiceAuthenticator.Commands.Logic;
 
 public class CommandResolver : ICommandResolver
 {

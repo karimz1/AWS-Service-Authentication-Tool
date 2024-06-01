@@ -1,6 +1,6 @@
-﻿using AwsTokenRefresher.Core.Interfaces;
+﻿using AwsServiceAuthenticator.Core.Interfaces;
 
-namespace AwsTokenRefresher.Core.Models;
+namespace AwsServiceAuthenticator.Core.Models;
 
 public record SystemRegion : ISystemRegion
 {

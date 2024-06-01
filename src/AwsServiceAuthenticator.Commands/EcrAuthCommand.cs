@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Amazon;
 using Amazon.ECR;
-using AwsTokenRefresher.Core.Interfaces;
+using AwsServiceAuthenticator.Core.Interfaces;
 
-namespace AwsTokenRefresher.Commands;
+namespace AwsServiceAuthenticator.Commands;
 
 public class EcrAuthCommand : ICommand
 {

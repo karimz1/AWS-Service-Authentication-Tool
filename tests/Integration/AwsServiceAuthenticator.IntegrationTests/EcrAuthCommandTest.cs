@@ -1,8 +1,8 @@
-﻿using AwsTokenRefresher.Commands;
-using AwsTokenRefresher.Tests.Base;
+﻿using AwsServiceAuthenticator.Commands;
+using AwsServiceAuthenticator.IntegrationTests.Base;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AwsTokenRefresher.Tests;
+namespace AwsServiceAuthenticator.IntegrationTests;
 
 [TestFixture]
 public class EcrAuthIntegrationTestTest : IntegrationTestBase

@@ -4,9 +4,9 @@ using Amazon.CodeArtifact.Model;
 using Amazon.Runtime;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
-using AwsTokenRefresher.Core.Interfaces;
+using AwsServiceAuthenticator.Core.Interfaces;
 
-namespace AwsTokenRefresher.Infrastructure.Services;
+namespace AwsServiceAuthenticator.Infrastructure.Services;
 
 public class AwsAuthenticator : IAwsAuthenticator
 {

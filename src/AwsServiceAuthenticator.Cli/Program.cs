@@ -1,8 +1,7 @@
-﻿using AwsTokenRefresher.Cli;
-using AwsTokenRefresher.Core.Interfaces;
+﻿using AwsServiceAuthenticator.Cli;
+using AwsServiceAuthenticator.Core.Interfaces;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
-
 
 ILogger logger = null;
 

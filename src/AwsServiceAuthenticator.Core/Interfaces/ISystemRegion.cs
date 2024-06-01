@@ -1,4 +1,4 @@
-namespace AwsTokenRefresher.Core.Interfaces;
+namespace AwsServiceAuthenticator.Core.Interfaces;
 
 public interface ISystemRegion
 {

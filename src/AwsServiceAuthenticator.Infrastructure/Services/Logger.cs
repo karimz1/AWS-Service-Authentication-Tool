@@ -1,9 +1,10 @@
 ﻿using Serilog;
-using ILogger = AwsTokenRefresher.Core.Interfaces.ILogger;
+using ILogger = AwsServiceAuthenticator.Core.Interfaces.ILogger;
+using Interfaces_ILogger = AwsServiceAuthenticator.Core.Interfaces.ILogger;
 
-namespace AwsTokenRefresher.Infrastructure.Services;
+namespace AwsServiceAuthenticator.Infrastructure.Services;
 
-public class SerilogLogger : ILogger
+public class SerilogLogger : Interfaces_ILogger
 {
     private readonly Serilog.ILogger _logger;
 
