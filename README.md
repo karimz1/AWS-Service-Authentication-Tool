@@ -35,7 +35,7 @@ Welcome to the AWS Authentication Tool repository! This project contains a .NET 
 Run the tool with the desired command and options:
 
 ```sh
-dotnet AwsTokenRefresher.Cli.dll --command nuget --region us-east-1 --logPath ./logs
+dotnet AwsServiceAuthenticator.Cli.dll --command nuget --region us-east-1 --logPath ./logs
 ```
 
 #### Available Commands
@@ -61,8 +61,8 @@ To ensure that your development machine is always authenticated with the necessa
 2. Add the following line to run the tool at startup (adjust the path as needed):
 
     ```sh
-    @reboot dotnet /path/to/AwsTokenRefresher.Cli.dll --command nuget --region us-east-1 --logPath /path/to/logs
-    @reboot dotnet /path/to/AwsTokenRefresher.Cli.dll --command ecr --region us-east-1 --logPath /path/to/logs
+    @reboot dotnet /path/to/AwsServiceAuthenticator.Cli.dll --command nuget --region us-east-1 --logPath /path/to/logs
+    @reboot dotnet /path/to/AwsServiceAuthenticator.Cli.dll --command ecr --region us-east-1 --logPath /path/to/logs
     ```
 
 #### Task Scheduler Example (Windows)
@@ -72,7 +72,7 @@ To ensure that your development machine is always authenticated with the necessa
 3. Set the action to start a program and use the following settings:
 
     ```sh
-    dotnet C:\path\to\AwsTokenRefresher.Cli.dll --command nuget --region us-east-1 --logPath C:\path\to\logs
+    dotnet C:\path\to\AwsServiceAuthenticator.Cli.dll --command nuget --region us-east-1 --logPath C:\path\to\logs
     ```
 
 4. Repeat for the other command if needed.
@@ -117,7 +117,7 @@ You can set these variables through the command line options as shown in the usa
 Run the tool with the desired command and options:
 
 ```sh
-dotnet run --project ./src/AwsTokenRefresher.Cli/AwsTokenRefresher.Cli.csproj -- --command nuget --region us-east-1 --logPath ./logs
+dotnet run --project ./src/AwsServiceAuthenticator.Cli/AwsServiceAuthenticator.Cli.csproj -- --command nuget --region us-east-1 --logPath ./logs
 ```
 
 ### Testing
