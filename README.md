@@ -24,7 +24,7 @@ Welcome to the AWS Authentication Tool repository! This project contains a .NET 
 
 ### Installation
 
-1. Download the latest release from the [Releases](https://github.com/karimz1/aws-authentication-tool/releases) page.
+1. Download the latest release from the [Releases](https://github.com/karimz1/AWS-Service-Authentication-Tool/releases) page.
 
 2. Extract the release package to your desired location.
 
@@ -158,7 +158,7 @@ For users who prefer PowerShell, there is a PowerShell version of these scripts 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/karimz1/AWS-Service-Authentication-Tool/blob/main/LICENCE) file for details.
 
 ## Contributing
 
