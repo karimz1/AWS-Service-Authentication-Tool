@@ -1,5 +1,7 @@
 # AWS Service Authentication Tool
 
+[![Build and Release](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml/badge.svg?event=release)](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml)
+
 ## Overview
 
 Welcome to the AWS Authentication Tool repository! This project contains a .NET application designed to streamline the authentication process for AWS services like CodeArtifact and ECR. This tool helps you log into each service and update necessary tokens or credentials, with detailed logging for easy auditing and troubleshooting. This version is a more robust and versatile alternative to the PowerShell scripts previously provided.
