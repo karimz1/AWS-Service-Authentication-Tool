@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>AwsTokenRefresher.Commands</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AwsServiceAuthenticator.Core\AwsServiceAuthenticator.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AWSSDK.CodeArtifact" Version="3.7.302.13" />
+      <PackageReference Include="AWSSDK.ECR" Version="3.7.302.11" />
+    </ItemGroup>
+
+</Project>

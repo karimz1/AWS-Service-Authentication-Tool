@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwsServiceAuthenticator.Cli", "src\AwsServiceAuthenticator.Cli\AwsServiceAuthenticator.Cli.csproj", "{5F16F2F0-DA7B-474F-A40A-46092F08E263}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwsServiceAuthenticator.Core", "src\AwsServiceAuthenticator.Core\AwsServiceAuthenticator.Core.csproj", "{16A8A4DA-520F-4845-8AE8-7EED515B9A72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwsServiceAuthenticator.Infrastructure", "src\AwsServiceAuthenticator.Infrastructure\AwsServiceAuthenticator.Infrastructure.csproj", "{43EC9D03-146A-4F55-9855-592080013F6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwsServiceAuthenticator.Commands", "src\AwsServiceAuthenticator.Commands\AwsServiceAuthenticator.Commands.csproj", "{7AA282ED-780C-4B08-BD92-D159A111F47F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dependencies", ".dependencies", "{4702EE09-5955-4046-B0AE-806AC1637034}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\release.yml = .github\workflows\release.yml
+		README.md = README.md
+		LICENCE = LICENCE
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{54F0EA9A-90A0-4284-B0FC-0222FF03C1BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{591A044E-8D9F-438F-A967-04A31FA7E034}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwsServiceAuthenticator.IntegrationTests", "tests\Integration\AwsServiceAuthenticator.IntegrationTests\AwsServiceAuthenticator.IntegrationTests.csproj", "{52E2AF0A-972E-47E5-9A0D-403564831A8F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F16F2F0-DA7B-474F-A40A-46092F08E263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F16F2F0-DA7B-474F-A40A-46092F08E263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F16F2F0-DA7B-474F-A40A-46092F08E263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F16F2F0-DA7B-474F-A40A-46092F08E263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16A8A4DA-520F-4845-8AE8-7EED515B9A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16A8A4DA-520F-4845-8AE8-7EED515B9A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16A8A4DA-520F-4845-8AE8-7EED515B9A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16A8A4DA-520F-4845-8AE8-7EED515B9A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EC9D03-146A-4F55-9855-592080013F6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43EC9D03-146A-4F55-9855-592080013F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43EC9D03-146A-4F55-9855-592080013F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43EC9D03-146A-4F55-9855-592080013F6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AA282ED-780C-4B08-BD92-D159A111F47F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AA282ED-780C-4B08-BD92-D159A111F47F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AA282ED-780C-4B08-BD92-D159A111F47F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AA282ED-780C-4B08-BD92-D159A111F47F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52E2AF0A-972E-47E5-9A0D-403564831A8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52E2AF0A-972E-47E5-9A0D-403564831A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52E2AF0A-972E-47E5-9A0D-403564831A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52E2AF0A-972E-47E5-9A0D-403564831A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{591A044E-8D9F-438F-A967-04A31FA7E034} = {54F0EA9A-90A0-4284-B0FC-0222FF03C1BE}
+		{52E2AF0A-972E-47E5-9A0D-403564831A8F} = {591A044E-8D9F-438F-A967-04A31FA7E034}
+	EndGlobalSection
+EndGlobal
