@@ -103,7 +103,7 @@ You can set these variables through the command line options as shown in the usa
 
    ```sh
    git clone https://github.com/karimz1/AWS-Service-Authentication-Tool.git
-   cd aws-authentication-tool
+   cd AWS-Service-Authentication-Tool
    ```
 
 2. Build the project:
