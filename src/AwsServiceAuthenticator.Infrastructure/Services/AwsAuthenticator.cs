@@ -18,6 +18,7 @@ public class AwsAuthenticator : IAwsAuthenticator
         _logger = logger;
         _regionSystemName = systemName.Region;
     }
+    
     public async Task<string> GetDomainOwnerIdAsync()
     {
         try

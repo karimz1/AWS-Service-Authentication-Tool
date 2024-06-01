@@ -35,7 +35,7 @@ Welcome to the AWS Authentication Tool repository! This project contains a .NET 
 Run the tool with the desired command and options:
 
 ```sh
-dotnet AwsServiceAuthenticator.Cli.dll --command nuget --region us-east-1 --logPath ./logs
+dotnet AwsServiceAuthenticator.Cli.dll --command nuget --region us-east-1 --logFolderPath ./logs
 ```
 
 #### Available Commands

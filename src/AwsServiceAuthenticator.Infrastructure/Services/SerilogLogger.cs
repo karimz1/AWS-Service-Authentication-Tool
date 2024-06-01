@@ -1,6 +1,4 @@
-﻿using Serilog;
-using ILogger = AwsServiceAuthenticator.Core.Interfaces.ILogger;
-using Interfaces_ILogger = AwsServiceAuthenticator.Core.Interfaces.ILogger;
+﻿using Interfaces_ILogger = AwsServiceAuthenticator.Core.Interfaces.ILogger;
 
 namespace AwsServiceAuthenticator.Infrastructure.Services;
 
