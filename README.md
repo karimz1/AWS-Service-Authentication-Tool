@@ -1,6 +1,6 @@
 # AWS Service Authentication Tool
 
-[![Build and Release](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml/badge.svg?event=release)](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml)
+[![Build and Release](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml/badge.svg)](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml)
 
 ## Overview
 
