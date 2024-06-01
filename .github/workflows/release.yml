@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*.*.*'  # Trigger on version tags
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -11,6 +11,18 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            zip_command: zip -r aws-service-authenticator-linux.zip ./publish
+            artifact_name: aws-service-authenticator-linux.zip
+          - os: windows-latest
+            zip_command: powershell Compress-Archive -Path ./publish/* -DestinationPath aws-service-authenticator-windows.zip
+            artifact_name: aws-service-authenticator-windows.zip
+          - os: macos-latest
+            zip_command: zip -r aws-service-authenticator-macos.zip ./publish
+            artifact_name: aws-service-authenticator-macos.zip
+    env:
+      SOLUTION_PATH: AwsServiceAuthenticator.sln
 
     steps:
       - name: Checkout code
@@ -22,21 +34,24 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Install dependencies
-        run: dotnet restore AwsServiceAuthenticator.sln
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
 
       - name: Build
-        run: dotnet build --configuration Release AwsServiceAuthenticator.sln
+        run: dotnet build --configuration Release ${{ env.SOLUTION_PATH }}
 
       - name: Publish
-        run: dotnet publish --configuration Release --output ./publish AwsServiceAuthenticator.sln
+        run: dotnet publish --configuration Release --output ./publish ${{ env.SOLUTION_PATH }}
+
+      - name: Create ZIP file
+        run: ${{ matrix.zip_command }}
 
       - name: Archive release files
         uses: actions/upload-artifact@v3
         with:
-          name: release-${{ matrix.os }}
-          path: ./publish
+          name: ${{ matrix.os }}
+          path: ${{ matrix.artifact_name }}
 
-  reate_release:
+  create_release:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -46,28 +61,28 @@ jobs:
       - name: Download build artifacts (Linux)
         uses: actions/download-artifact@v3
         with:
-          name: release-ubuntu-latest
-          path: ./publish/ubuntu
+          name: ubuntu-latest
+          path: ./aws-service-authenticator-linux.zip
 
       - name: Download build artifacts (Windows)
         uses: actions/download-artifact@v3
         with:
-          name: release-windows-latest
-          path: ./publish/windows
+          name: windows-latest
+          path: ./aws-service-authenticator-windows.zip
 
       - name: Download build artifacts (macOS)
         uses: actions/download-artifact@v3
         with:
-          name: release-macos-latest
-          path: ./publish/macos
+          name: macos-latest
+          path: ./aws-service-authenticator-macos.zip
 
       - name: Create a release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./publish/ubuntu/*
-            ./publish/windows/*
-            ./publish/macos/*
+            ./aws-service-authenticator-linux.zip
+            ./aws-service-authenticator-windows.zip
+            ./aws-service-authenticator-macos.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
