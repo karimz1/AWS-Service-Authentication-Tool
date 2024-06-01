@@ -57,32 +57,32 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
+  
       - name: Download build artifacts (Linux)
         uses: actions/download-artifact@v3
         with:
           name: ubuntu-latest
-          path: ./aws-service-authenticator-linux.zip
-
+          path: ./downloads
+  
       - name: Download build artifacts (Windows)
         uses: actions/download-artifact@v3
         with:
           name: windows-latest
-          path: ./aws-service-authenticator-windows.zip
-
+          path: ./downloads
+  
       - name: Download build artifacts (macOS)
         uses: actions/download-artifact@v3
         with:
           name: macos-latest
-          path: ./aws-service-authenticator-macos.zip
-
+          path: ./downloads
+  
       - name: Create a release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./aws-service-authenticator-linux.zip
-            ./aws-service-authenticator-windows.zip
-            ./aws-service-authenticator-macos.zip
+            ./downloads/aws-service-authenticator-linux.zip
+            ./downloads/aws-service-authenticator-windows.zip
+            ./downloads/aws-service-authenticator-macos.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
