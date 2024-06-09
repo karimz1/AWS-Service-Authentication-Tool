@@ -6,50 +6,33 @@ using AwsServiceAuthenticator.Core.Interfaces;
 
 namespace AwsServiceAuthenticator.Commands;
 
-public class NuGetAuthCommand : ICommand
+public class NuGetAuthCommand(IAwsAuthenticator awsAuthenticator, ILogger logger, ISystemRegion region) : ICommand
 {
-    private readonly IAwsAuthenticator _awsAuthenticator;
-    private readonly ILogger _logger;
-    private readonly string _region;
-
-    public NuGetAuthCommand(IAwsAuthenticator awsAuthenticator, ILogger logger, ISystemRegion region)
-    {
-        _awsAuthenticator = awsAuthenticator;
-        _logger = logger;
-        _region = region.Region;
-    }
+    private readonly string _region = region.Region;
 
     public async Task ExecuteAsync()
     {
-        try
-        {
-            string domainOwner = await _awsAuthenticator.GetDomainOwnerIdAsync();
-            string domainName = await _awsAuthenticator.GetDomainNameAsync();
-            string token = await _awsAuthenticator.GetAuthorizationTokenAsync(domainName, domainOwner);
+            var domainOwner = await awsAuthenticator.GetDomainOwnerIdAsync();
+            var domainName = await awsAuthenticator.GetDomainNameAsync();
+            var token = await awsAuthenticator.GetAuthorizationTokenAsync(domainName, domainOwner);
 
-            var client = new AmazonCodeArtifactClient(RegionEndpoint.GetBySystemName(_region));
+            using var client = new AmazonCodeArtifactClient(RegionEndpoint.GetBySystemName(_region));
             var reposResponse = await client.ListRepositoriesInDomainAsync(new ListRepositoriesInDomainRequest
             {
                 Domain = domainName,
                 DomainOwner = domainOwner
             });
 
-            foreach (var repo in reposResponse.Repositories)
+            foreach (var repoName in reposResponse.Repositories.Select(repo => repo.Name))
             {
-                string repoName = repo.Name;
                 await RemoveNuGetSource(repoName);
                 await AddNuGetSource(domainName, domainOwner, repoName, token);
             }
-        }
-        catch (Exception ex)
-        {
-            _logger.LogInformation($"Error: {ex.Message}");
-        }
     }
 
     private async Task AddNuGetSource(string domainName, string domainOwner, string repoName, string token)
     {
-        string nugetSource = $"https://{domainName}-{domainOwner}.d.codeartifact.{_region}.amazonaws.com/nuget/{repoName}/v3/index.json";
+        var nugetSource = $"https://{domainName}-{domainOwner}.d.codeartifact.{_region}.amazonaws.com/nuget/{repoName}/v3/index.json";
 
         var addSourceInfo = new ProcessStartInfo
         {
@@ -63,15 +46,9 @@ public class NuGetAuthCommand : ICommand
         var process = Process.Start(addSourceInfo);
         await process.WaitForExitAsync();
 
-        if (process.ExitCode == 0)
-        {
-            _logger.LogInformation($"NuGet authentication for repository {repoName} successful.");
-        }
-        else
-        {
-            _logger.LogInformation(
-                $"NuGet authentication for repository {repoName} failed: {process.StandardError.ReadToEnd()}");
-        }
+        logger.LogInformation(process.ExitCode == 0
+            ? $"NuGet authentication for repository {repoName} successful."
+            : $"NuGet authentication for repository {repoName} failed: {await process.StandardError.ReadToEndAsync()}");
     }
 
     private async Task RemoveNuGetSource(string repoName)
@@ -88,12 +65,8 @@ public class NuGetAuthCommand : ICommand
         var removeProcess = Process.Start(removeSourceInfo);
         await removeProcess.WaitForExitAsync();
         if (removeProcess.ExitCode == 0)
-        {
-            _logger.LogInformation($"Removed existing NuGet source: {repoName}");
-        }
+            logger.LogInformation($"Removed existing NuGet source: {repoName}");
         else
-        {
-            _logger.LogError($"Failed to remove existing NuGet source: {repoName}. Error: {removeProcess.StandardError.ReadToEnd()}");
-        }
+            logger.LogError($"Failed to remove existing NuGet source: {repoName}. Error: {await removeProcess.StandardError.ReadToEndAsync()}");
     }
 }

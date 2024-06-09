@@ -3,7 +3,7 @@ using AwsServiceAuthenticator.Core.Interfaces;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 
-ILogger logger = null;
+ILogger? logger = null;
 
 try
 {
@@ -11,11 +11,11 @@ try
     ServiceConfiguration.InitializeTraceListeners();
     var logFileName = $"refreshTokens-{DateTime.Now:yyyy-MM-dd}.log";
 
-    var result = await Parser.Default.ParseArguments<Options>(args)
+    _ = await Parser.Default.ParseArguments<ArgumentOptions>(args)
         .WithParsedAsync(async options =>
         {
-            logFileName = Path.Combine(options.LogFolderPath, logFileName);
-            var serviceProvider = ServiceConfiguration.ConfigureServices(options.Region, logFileName);
+            var logFilePath = Path.Combine(options.LogFolderPath, logFileName);
+            var serviceProvider = ServiceConfiguration.ConfigureServices(options.Region, logFilePath);
             logger = serviceProvider.GetRequiredService<ILogger>();
 
             var region = options.Region;

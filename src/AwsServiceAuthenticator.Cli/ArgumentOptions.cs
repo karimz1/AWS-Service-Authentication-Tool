@@ -2,7 +2,7 @@
 
 namespace AwsServiceAuthenticator.Cli;
 
-internal class Options
+internal class ArgumentOptions
 {
     [Option('c', "command", Required = true, HelpText = "Command to execute (ecr or nuget).")]
     public string Command { get; set; }

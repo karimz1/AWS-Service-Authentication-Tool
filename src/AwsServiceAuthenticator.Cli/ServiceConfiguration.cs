@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using Amazon;
 using AwsServiceAuthenticator.Commands;
-using AwsServiceAuthenticator.Commands.Logic;
 using AwsServiceAuthenticator.Core.Interfaces;
 using AwsServiceAuthenticator.Core.Models;
 using AwsServiceAuthenticator.Infrastructure.Services;
@@ -13,26 +12,18 @@ namespace AwsServiceAuthenticator.Cli;
 
 public static class ServiceConfiguration
 {
-    public static ServiceProvider ConfigureServices(string region, string logPath)
+    public static ServiceProvider ConfigureServices(string region, string logFilePath)
     {
-        var logger = new LoggerConfiguration()
-            .WriteTo.Console()
-            .WriteTo.File(logPath)
-            .CreateLogger();
-
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddSingleton<ILogger, SerilogLogger>(_ => new SerilogLogger(logger));
+        serviceCollection.RegisterLogging(logFilePath);
+        serviceCollection.RegisterCommandsMapping();
+       
         serviceCollection.AddSingleton<IAwsAuthenticator, AwsAuthenticator>();
         serviceCollection.AddSingleton<ISystemRegion>(_ => new SystemRegion(region));
-        serviceCollection.AddSingleton<ICommandResolver, CommandResolver>();
-
-        // Register commands
-        serviceCollection.AddTransient<EcrAuthCommand>();
-        serviceCollection.AddTransient<NuGetAuthCommand>();
 
         return serviceCollection.BuildServiceProvider();
     }
-
+    
     public static void ConfigureAwsLogging()
     {
         AWSConfigs.LoggingConfig.LogTo = LoggingOptions.Console;
@@ -44,5 +35,27 @@ public static class ServiceConfiguration
     public static void InitializeTraceListeners()
     {
         Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+    }
+
+    private static IServiceCollection RegisterLogging(this IServiceCollection services, string logFilePath)
+    {
+        var logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .WriteTo.File(logFilePath)
+            .CreateLogger();
+        
+        services.AddSingleton<ILogger, SerilogLogger>(_ => new SerilogLogger(logger));
+        return services;
+    }
+
+    private static IServiceCollection RegisterCommandsMapping(this IServiceCollection services)
+    {
+        services.AddSingleton<ICommandResolver, CommandResolver>();
+        var commandMappings = CommandConfiguration.GetCommandMappings();
+        
+        foreach (var command in commandMappings)
+            services.AddTransient(command.Value);
+        
+        return services;
     }
 }
