@@ -31,7 +31,6 @@ try
             if (handler == null || options.Command == AvailableCommandType.None)
             {
                 logger.LogError($"Invalid command: {options.CommandRaw}");
-                Console.WriteLine("Invalid command.");
                 return;
             }
 
