@@ -47,8 +47,8 @@ public class NuGetAuthCommandHandler(IAwsAuthenticator awsAuthenticator, ILogger
         await process.WaitForExitAsync();
 
         logger.LogInformation(process.ExitCode == 0
-            ? $"NuGet authentication for repository {repoName} successful."
-            : $"NuGet authentication for repository {repoName} failed: {await process.StandardError.ReadToEndAsync()}");
+            ? $"NuGet authentication for repository: {repoName} successful."
+            : $"NuGet authentication for repository: {repoName} failed, details: {await process.StandardError.ReadToEndAsync()}");
     }
 
     private async Task RemoveNuGetSource(string repoName)
@@ -65,8 +65,8 @@ public class NuGetAuthCommandHandler(IAwsAuthenticator awsAuthenticator, ILogger
         var removeProcess = Process.Start(removeSourceInfo);
         await removeProcess.WaitForExitAsync();
         if (removeProcess.ExitCode == 0)
-            logger.LogInformation($"Removed existing NuGet source: {repoName}");
+            logger.LogDebug($"Removed existing NuGet Source for: {repoName}");
         else
-            logger.LogError($"Failed to remove existing NuGet source: {repoName}. Error: {await removeProcess.StandardError.ReadToEndAsync()}");
+            logger.LogError($"Failed to remove existing NuGet Source for: {repoName}. Error: {await removeProcess.StandardError.ReadToEndAsync()}");
     }
 }

@@ -33,6 +33,6 @@ public class EcrAuthCommandHandler(ILogger logger, ISystemRegion systemRegion) :
 
             logger.LogInformation(process.ExitCode == 0
                 ? "ECR authentication successful."
-                : $"ECR authentication failed: {await process.StandardError.ReadToEndAsync()}");
+                : $"ECR authentication failed, details: {await process.StandardError.ReadToEndAsync()}");
     }
 }

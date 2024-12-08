@@ -12,8 +12,6 @@ ILogger? logger = null;
 
 try
 {
-    ServiceConfiguration.ConfigureAwsLogging();
-    ServiceConfiguration.InitializeTraceListeners();
     var logFileName = $"refreshTokens-{DateTime.Now:yyyy-MM-dd}.log";
 
     var argumentParserService = new ArgumentParserService<ArgumentOptions>();
@@ -23,7 +21,7 @@ try
         .WithParsedAsync(async options =>
         {
             var logFilePath = Path.Combine(options.LogFolderPath, logFileName);
-            var serviceProvider = ServiceConfiguration.ConfigureServices(options.Region, logFilePath);
+            var serviceProvider = ServiceConfiguration.ConfigureServices(options.Region, logFilePath, options.DebugMode);
             logger = serviceProvider.GetRequiredService<ILogger>();
             logger.LogInformation($"Starting with region: {options.Region}, log path: {options.LogFolderPath}");
 

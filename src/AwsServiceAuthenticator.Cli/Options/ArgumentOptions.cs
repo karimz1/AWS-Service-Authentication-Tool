@@ -15,4 +15,7 @@ internal class ArgumentOptions
 
     [Option('l', "logFolderPath", Required = true, HelpText = "Path to log folder.")]
     public string LogFolderPath { get; set; } = string.Empty;
+    
+    [Option('d', "debugMode", Required = false, HelpText = "Enhance Logging using DebugMode")]
+    public bool DebugMode { get; set; }
 }

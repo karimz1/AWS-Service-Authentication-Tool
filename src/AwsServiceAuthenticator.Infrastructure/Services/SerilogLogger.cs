@@ -18,4 +18,9 @@ public class SerilogLogger(Serilog.ILogger logger) : Interfaces_ILogger
     {
         logger.Error(exception, message);
     }
+
+    public void LogDebug(string message)
+    {
+        logger.Debug(message);
+    }
 }
