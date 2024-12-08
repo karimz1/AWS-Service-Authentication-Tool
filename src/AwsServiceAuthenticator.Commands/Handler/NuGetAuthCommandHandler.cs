@@ -4,9 +4,9 @@ using Amazon.CodeArtifact;
 using Amazon.CodeArtifact.Model;
 using AwsServiceAuthenticator.Core.Interfaces;
 
-namespace AwsServiceAuthenticator.Commands;
+namespace AwsServiceAuthenticator.Commands.Handler;
 
-public class NuGetAuthCommand(IAwsAuthenticator awsAuthenticator, ILogger logger, ISystemRegion region) : ICommand
+public class NuGetAuthCommandHandler(IAwsAuthenticator awsAuthenticator, ILogger logger, ISystemRegion region) : ICommandHandler
 {
     private readonly string _region = region.Region;
 

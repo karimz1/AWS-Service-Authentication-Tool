@@ -3,9 +3,9 @@ using Amazon;
 using Amazon.ECR;
 using AwsServiceAuthenticator.Core.Interfaces;
 
-namespace AwsServiceAuthenticator.Commands;
+namespace AwsServiceAuthenticator.Commands.Handler;
 
-public class EcrAuthCommand(ILogger logger, ISystemRegion systemRegion) : ICommand
+public class EcrAuthCommandHandler(ILogger logger, ISystemRegion systemRegion) : ICommandHandler
 {
     private readonly string _systemRegion = systemRegion.Region;
 

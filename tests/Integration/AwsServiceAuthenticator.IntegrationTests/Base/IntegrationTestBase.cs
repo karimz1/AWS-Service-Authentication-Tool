@@ -1,4 +1,5 @@
 using AwsServiceAuthenticator.Commands;
+using AwsServiceAuthenticator.Commands.Handler;
 using AwsServiceAuthenticator.Core.Interfaces;
 using AwsServiceAuthenticator.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,8 +23,8 @@ public abstract class IntegrationTestBase
         serviceCollection.AddSingleton(systemRegionMock.Object);
         serviceCollection.AddSingleton<IAwsAuthenticator, AwsAuthenticator>();
 
-        serviceCollection.AddTransient<NuGetAuthCommand>();
-        serviceCollection.AddTransient<EcrAuthCommand>();
+        serviceCollection.AddTransient<NuGetAuthCommandHandler>();
+        serviceCollection.AddTransient<EcrAuthCommandHandler>();
 
         ServiceProvider = serviceCollection.BuildServiceProvider();
     }
