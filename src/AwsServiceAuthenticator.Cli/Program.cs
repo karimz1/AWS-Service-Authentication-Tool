@@ -3,7 +3,6 @@ using AwsServiceAuthenticator.Cli.Options;
 using AwsServiceAuthenticator.Cli.Utls;
 using AwsServiceAuthenticator.Commands.Enums;
 using AwsServiceAuthenticator.Commands.Factory;
-using AwsServiceAuthenticator.Commands.Handler;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using ILogger = AwsServiceAuthenticator.Core.Interfaces.ILogger;
@@ -23,7 +22,9 @@ try
             var logFilePath = Path.Combine(options.LogFolderPath, logFileName);
             var serviceProvider = ServiceConfiguration.ConfigureServices(options.Region, logFilePath, options.DebugMode);
             logger = serviceProvider.GetRequiredService<ILogger>();
-            logger.LogInformation($"Starting with region: {options.Region}, log path: {options.LogFolderPath}");
+            
+            logger.LogInformation("Starting AwsServiceAuthenticator.Cli");
+            logger.LogInformation($"Used Arguments: region: {options.Region}, log path: {options.LogFolderPath}, command: {options.Command}, debug mode: {options.DebugMode}");
 
             var commandRegistry = serviceProvider.GetRequiredService<ICommandRegistry>();
             var handler = commandRegistry.GetCommandHandler(options.Command);
@@ -55,4 +56,5 @@ catch (Exception ex)
 finally
 {
     logger?.LogInformation("Application has exited.");
+    logger?.CloseAndFlush();
 }

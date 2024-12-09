@@ -1,8 +1,9 @@
-﻿using Interfaces_ILogger = AwsServiceAuthenticator.Core.Interfaces.ILogger;
+﻿using Serilog;
+using Interfaces_ILogger = AwsServiceAuthenticator.Core.Interfaces.ILogger;
 
 namespace AwsServiceAuthenticator.Infrastructure.Services;
 
-public class SerilogLogger(Serilog.ILogger logger) : Interfaces_ILogger
+public class SerilogLogger(ILogger logger) : Interfaces_ILogger
 {
     public void LogInformation(string message)
     {
@@ -22,5 +23,10 @@ public class SerilogLogger(Serilog.ILogger logger) : Interfaces_ILogger
     public void LogDebug(string message)
     {
         logger.Debug(message);
+    }
+
+    public void CloseAndFlush()
+    {
+       Log.CloseAndFlush();
     }
 }

@@ -7,6 +7,7 @@ using AwsServiceAuthenticator.Core.Interfaces;
 using AwsServiceAuthenticator.Core.Models;
 using AwsServiceAuthenticator.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -19,32 +20,35 @@ public static class ServiceConfiguration
     public static ServiceProvider ConfigureServices(string region, string logFilePath, bool debugMode)
     {
         var serviceConfiguration = new ServiceCollection();
-        if (debugMode)
-        {
-            serviceConfiguration.ConfigureAwsLogging();
-            serviceConfiguration.InitializeTraceListeners();
-        }
         
-        return serviceConfiguration.RegisterCommands()
-                                   .RegsiterAwsServices(region)
-                                   .RegisterLogging(logFilePath, debugMode).BuildServiceProvider();
+        
+        serviceConfiguration.AddLogging(loggingBuilder =>
+        {
+            loggingBuilder.ClearProviders();
+            loggingBuilder.AddSerilog(dispose: true);
+        });
+        
+        var serviceProvider = serviceConfiguration.RegisterCommands()
+                                                  .RegisterAwsServices(region)
+                                                  .RegisterLogging(logFilePath, debugMode)
+                                                  .BuildServiceProvider();
+        
+        if (debugMode)
+            ConfigureAwsLogging(serviceProvider.GetRequiredService<ILogger>());
+        
+        return serviceProvider;
         
         
     }
 
-    private static IServiceCollection ConfigureAwsLogging(this IServiceCollection serviceCollection)
+    private static void ConfigureAwsLogging(ILogger logger)
     {
-        AWSConfigs.LoggingConfig.LogTo = LoggingOptions.Console;
+        var listener = new SerilogTraceRedirect(logger);
+        AWSConfigs.AddTraceListener("Amazon", listener);
+        AWSConfigs.LoggingConfig.LogTo = LoggingOptions.SystemDiagnostics;
         AWSConfigs.LoggingConfig.LogMetrics = true;
         AWSConfigs.LoggingConfig.LogResponses = ResponseLoggingOption.Always;
         AWSConfigs.LoggingConfig.LogMetricsFormat = LogMetricsFormatOption.JSON;
-        return serviceCollection;
-    }
-
-    private static IServiceCollection InitializeTraceListeners( this IServiceCollection serviceCollection)
-    {
-        Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-        return serviceCollection;
     }
 
     private static IServiceCollection RegisterCommands(this IServiceCollection services)
@@ -62,7 +66,7 @@ public static class ServiceConfiguration
         return services;
     }
 
-    private static IServiceCollection RegsiterAwsServices(this IServiceCollection services, string region)
+    private static IServiceCollection RegisterAwsServices(this IServiceCollection services, string region)
     {
         services.AddSingleton<IAwsAuthenticator, AwsAuthenticator>();
         services.AddSingleton<ISystemRegion>(_ => new SystemRegion(region));
@@ -71,16 +75,19 @@ public static class ServiceConfiguration
 
     private static IServiceCollection RegisterLogging(this IServiceCollection services, string logFilePath, bool debugMode)
     {
-        var levelSwitch = new LoggingLevelSwitch(LogEventLevel.Information)
+        var levelSwitch = new LoggingLevelSwitch
         {
             MinimumLevel = debugMode ? LogEventLevel.Debug :
                 LogEventLevel.Information
         };
 
         var logger = new LoggerConfiguration()
-            .MinimumLevel.ControlledBy(levelSwitch)
+            .MinimumLevel.ControlledBy(levelSwitch).Enrich.FromLogContext()
+            .WriteTo.Trace()
             .WriteTo.Console()
-            .WriteTo.File(logFilePath)
+            .WriteTo.File(path: logFilePath, 
+                          fileSizeLimitBytes: 5 * 1024 * 1024, // 5 MB
+                          rollOnFileSizeLimit: true)
             .CreateLogger();
 
         services.AddSingleton<ILogger, SerilogLogger>(_ => new SerilogLogger(logger));
