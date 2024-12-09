@@ -11,16 +11,12 @@ public class SerilogTraceRedirect(ILogger logger) : TraceListener
     public override void Write(string? message)
     {
         if (!string.IsNullOrEmpty(message))
-        {
-            _logger.LogInformation(message);
-        }
+            _logger.LogDebug(message);
     }
 
     public override void WriteLine(string? message)
     {
         if (!string.IsNullOrEmpty(message))
-        {
-            _logger.LogInformation(message);
-        }
+            _logger.LogDebug(message);
     }
 }
