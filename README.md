@@ -103,25 +103,30 @@ To automate token refreshing, integrate this tool with your system's task schedu
 
 ------
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/karimz1/AWS-Service-Authentication-Tool/blob/main/LICENCE) file for details.
-
-------
-
-## Contributing
-
-We welcome contributions! Feel free to open an issue or submit a pull request to improve the tool.
-
-------
-
 ### Additional Resources
 
 - [Releases based on Source Code](https://github.com/karimz1/AWS-Service-Authentication-Tool/releases)
-- NuGet Package - 💕Link is Comming Soon 💕
+- [🎁 NuGet Tool Package](https://www.nuget.org/packages/awsat)
+
+------
+
+## ❤️ Supporting the Project ❤️
+
+If you find this project useful, please consider supporting its development. Donations are appreciated and help maintain and improve this tool. 
+
+**PayPal:** [mails.karimzouine@gmail.com](mailto:mails.karimzouine@gmail.com)
 
 ------
 
 ## Development
 
-Detailed build and development instructions are now in the [DEVELOPMENT.md](./DEVELOPMENT.md) file.
+Detailed build and development instructions are now in the [DEVELOPMENT.md](https://github.com/karimz1/AWS-Service-Authentication-Tool/blob/main/DEVELOPMENT.md) file.
+
+
+------
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/karimz1/AWS-Service-Authentication-Tool/blob/main/LICENCE) file for details.
+
+------
