@@ -1,7 +1,3 @@
-Here’s the content for the `DEVELOPMENT.md` file:
-
----
-
 # Development Guide for AWS Service Authentication Tool
 
 This document outlines the steps for building, testing, and contributing to the AWS Service Authentication Tool.
