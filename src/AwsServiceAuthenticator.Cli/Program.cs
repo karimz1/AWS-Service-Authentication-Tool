@@ -1,4 +1,5 @@
-﻿using AwsServiceAuthenticator.Cli;
+﻿using System.Reflection;
+using AwsServiceAuthenticator.Cli;
 using AwsServiceAuthenticator.Cli.Options;
 using AwsServiceAuthenticator.Cli.Utls;
 using AwsServiceAuthenticator.Commands.Enums;
@@ -22,7 +23,7 @@ try
             var logFilePath = Path.Combine(options.LogFolderPath, logFileName);
             var serviceProvider = ServiceConfiguration.ConfigureServices(options.Region, logFilePath, options.DebugMode);
             logger = serviceProvider.GetRequiredService<ILogger>();
-            
+
             logger.LogInformation("Starting AwsServiceAuthenticator.Cli");
             logger.LogInformation($"Used Arguments: region: {options.Region}, log path: {options.LogFolderPath}, command: {options.Command}, debug mode: {options.DebugMode}");
 
@@ -40,9 +41,10 @@ try
 
     parserResult.WithNotParsed(errors =>
     {
+        var toolName = "awsat";
         var helpText = argumentParserService.GenerateHelpText(
             parserResult,
-            heading: "AWS Service Authentication Tool",
+            heading: $"{toolName} (AWS Service Authentication Tool)",
             preOptionsLine: "Available commands:\n" + CommandHelper.GetAvailableCommands()
         );
         Console.WriteLine(helpText);

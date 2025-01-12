@@ -1,167 +1,129 @@
-# AWS Service Authentication Tool
+# awsat (AWS Service Authentication Tool)
 
 [![Build and Release](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml/badge.svg)](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml)
 
 ## Overview
 
-Welcome to the AWS Authentication Tool repository! This project contains a .NET application designed to streamline the authentication process for AWS services like CodeArtifact and ECR. This tool helps you log into each service and update necessary tokens or credentials, with detailed logging for easy auditing and troubleshooting. This version is a more robust and versatile alternative to the PowerShell scripts previously provided.
+Welcome to the **AWS Service Authentication Tool**, a cross-platform CLI tool for managing AWS CodeArtifact and ECR authentication tokens. This tool simplifies the process of logging into AWS services and managing authentication credentials.
 
-## Features
+### Features
 
-- Authenticate and log into AWS CodeArtifact repositories.
+- Authenticate AWS CodeArtifact repositories.
 - Authenticate Docker with AWS ECR.
 - Cross-platform compatibility (Windows, macOS, and Linux).
-- Built with .NET 8 for improved performance and reliability.
-- Detailed logging with Serilog.
+- Detailed logging for auditing and debugging.
 
-## Installation and Usage
+------
 
-### Prerequisites
+## Installation
 
-- .NET 8 SDK installed. Download it from the [.NET website](https://dotnet.microsoft.com/download).
-- AWS CLI installed and configured. For more information, refer to the [AWS CLI Installation Guide](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) and [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
-- Docker installed (for ECR authentication).
-- Access to the AWS CodeArtifact and ECR services.
-- Proper configuration of AWS credentials and region.
+To install the AWS Service Authentication Tool as a global .NET tool, run:
 
-### Installation
+```bash
+dotnet tool install --global awsat
+```
+------
 
-1. Download the latest release from the [Releases](https://github.com/karimz1/AWS-Service-Authentication-Tool/releases) page.
+## Usage
 
-2. Extract the release package to your desired location.
+Run the tool with the desired command:
 
-### Usage
-
-Run the tool with the desired command and options:
-
-```sh
-dotnet AwsServiceAuthenticator.Cli.dll --command nuget --region us-east-1 --logFolderPath ./logs
+```bash
+awsat --command nuget --region us-east-1 --logFolderPath ./logs
 ```
 
-#### Available Commands
+### Available Commands
 
-- `nuget`: Refreshes authentication tokens for AWS CodeArtifact.
-- `ecr`: Refreshes authentication tokens for AWS ECR.
-- `--command`: The command to execute (`nuget` or `ecr`).
-- `--region`: The AWS region to use (e.g., `us-east-1`).
-- `--logFolderPath`: The path to the log file.
+- **`nuget`**: Refreshes authentication tokens for AWS CodeArtifact.
+- **`ecr`**: Refreshes authentication tokens for AWS ECR.
 
-### Automate with Cron Jobs or Task Scheduler 
+### Command-Line Options
 
-To ensure that your development machine is always authenticated with the necessary services, you can add this tool to your cron jobs (Linux/macOS) or Task Scheduler (Windows). This way, you can automate the authentication process to run at startup or at regular intervals.
+| Option                | Description                             | Required |
+| --------------------- | --------------------------------------- | -------- |
+| `-c, --command`       | Command to execute (`nuget` or `ecr`).  | Yes      |
+| `-r, --region`        | AWS region to use (e.g., `us-east-1`).  | Yes      |
+| `-l, --logFolderPath` | Path to the log file.                   | Yes      |
+| `-d, --debugMode`     | Enable debug mode for detailed logging. | No       |
 
-#### Cron Job Example (Linux/macOS)
+### Example Usage
+
+1. **Authenticate AWS CodeArtifact**:
+
+   ```bash
+   awsat --command nuget --region us-east-1 --logFolderPath ./logs
+   ```
+
+2. **Authenticate AWS ECR**:
+
+   
+
+   ```bash
+   awsat --command ecr --region us-east-1 --logFolderPath ./logs
+   ```
+
+------
+
+## Automating Authentication
+
+To automate token refreshing, integrate this tool with your system's task scheduler.
+
+### Cron Job Example (Linux/macOS)
 
 1. Open your crontab configuration:
 
-    ```sh
-    crontab -e
-    ```
-
-2. Add the following line to run the tool at startup (adjust the path as needed):
-
-    ```sh
-    @reboot dotnet /path/to/AwsServiceAuthenticator.Cli.dll --command nuget --region us-east-1 --logPath /path/to/logs
-    @reboot dotnet /path/to/AwsServiceAuthenticator.Cli.dll --command ecr --region us-east-1 --logPath /path/to/logs
-    ```
-
-#### Task Scheduler Example (Windows)
-
-1. Open Task Scheduler and create a new task.
-2. Set the trigger to run the task at login.
-3. Set the action to start a program and use the following settings:
-
-    ```sh
-    dotnet C:\path\to\AwsServiceAuthenticator.Cli.dll --command nuget --region us-east-1 --logPath C:\path\to\logs
-    ```
-
-4. Repeat for the other command if needed.
-
-### Configuration
-
-The tool uses configuration variables that can be modified as needed:
-
-- **REGION**: The AWS region where the service is hosted. Default is `us-east-1`.
-- **LOG PATH**: The path to the log file.
-
-### Example Configuration
-
-You can set these variables through the command line options as shown in the usage section.
-
-## Development
-
-### Prerequisites
-
-- .NET 8 SDK installed. Download it from the [.NET website](https://dotnet.microsoft.com/download).
-- AWS CLI installed and configured.
-- Docker installed (for ECR authentication).
-- Proper configuration of AWS credentials and region.
-
-### Setup
-
-1. Clone the repository:
-
-   ```sh
-   git clone https://github.com/karimz1/AWS-Service-Authentication-Tool.git
-   cd AWS-Service-Authentication-Tool
+   ```bash
+   crontab -e
    ```
 
-2. Build the project:
+2. Add the following line to refresh tokens at startup:
 
-   ```sh
-   dotnet build --configuration Release
+   ```bash
+   @reboot awsat --command nuget --region us-east-1 --logFolderPath /path/to/logs
    ```
 
-### Running Locally
+### Task Scheduler Example (Windows)
 
-Run the tool with the desired command and options:
+1. Open **Task Scheduler** and create a new task.
 
-```sh
-dotnet run --project ./src/AwsServiceAuthenticator.Cli/AwsServiceAuthenticator.Cli.csproj -- --command nuget --region us-east-1 --logPath ./logs
-```
+2. Set the trigger to run at login.
 
-### Testing
+3. Set the action to execute:
 
-To run the tests, use the following command:
+   ```powershell
+   awsat --command nuget --region us-east-1 --logFolderPath C:\path\to\logs
+   ```
 
-```sh
-dotnet test
-```
+------
 
-### Building and Releasing
+## Configuration
 
-This repository is set up to use GitHub Actions for continuous integration and deployment. The workflow builds and releases the project for Windows, macOS, and Linux.
+### Environment Prerequisites
 
-#### GitHub Actions Workflow
+- **AWS CLI**: Installed and configured with valid credentials. Refer to the [AWS CLI Configuration Guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
+- **Docker**: Installed for ECR authentication. Refer to Docker Installation Guide.
 
-The GitHub Actions workflow is defined in `.github/workflows/release.yml`.
-
-##### Trigger
-
-The workflow is triggered on push to tags matching the pattern `v*.*.*` (e.g., `v1.0.0`).
-
-##### Jobs
-
-1. **Build**: Builds the project for Windows, macOS, and Linux.
-2. **Create Release**: Creates a GitHub release and uploads the built artifacts.
-
-To create a new release, push a tag to the repository:
-
-```sh
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-This will trigger the GitHub Actions workflow, which will build the project for all specified platforms and create a release with the built artifacts.
-
-## PowerShell Version
-
-For users who prefer PowerShell, there is a PowerShell version of these scripts available [here](https://github.com/karimz1/AWS-Authentication-Scripts). This version requires PowerShell Core and provides similar functionality for AWS authentication.
+------
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/karimz1/AWS-Service-Authentication-Tool/blob/main/LICENCE) file for details.
 
+------
+
 ## Contributing
 
-Contributions are very welcome! If you have suggestions, improvements, or bug fixes, please open an issue or submit a pull request. Let's make this project even better together!
+We welcome contributions! Feel free to open an issue or submit a pull request to improve the tool.
+
+------
+
+### Additional Resources
+
+- [Releases based on Source Code](https://github.com/karimz1/AWS-Service-Authentication-Tool/releases)
+- NuGet Package - 💕Link is Comming Soon 💕
+
+------
+
+## Development
+
+Detailed build and development instructions are now in the [DEVELOPMENT.md](./DEVELOPMENT.md) file.

@@ -28,12 +28,19 @@ public class ArgumentParserService<TOptions> where TOptions : class
     /// </summary>
     public string GenerateHelpText(ParserResult<TOptions> parserResult, string heading, string? preOptionsLine = null)
     {
+        var year = DateTime.Now.Year;
         return HelpText.AutoBuild(parserResult, h =>
         {
             h.AdditionalNewLineAfterOption = true;
-            h.Heading = heading;
+
+            h.Heading = $"{heading}\n\n" +
+                   "Source Code: https://github.com/karimz1/AWS-Service-Authentication-Tool \n" +
+                   "Author: Karim Zouine - https://github.com/karimz1 \n\n";
+
             if (!string.IsNullOrEmpty(preOptionsLine))
                 h.AddPreOptionsLine(preOptionsLine);
+
+            h.Copyright = string.Empty;
             return h;
         }, e => e);
     }
