@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build Project",
+        "type": "shell",
+        "command": "dotnet build",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": "$msCompile",
+        "detail": "Build the .NET project inside the container."
+      },
+      {
+        "label": "Clean Project",
+        "type": "shell",
+        "command": "dotnet clean",
+        "group": {
+          "kind": "build",
+          "isDefault": false
+        },
+        "problemMatcher": [],
+        "detail": "Clean the .NET project output inside the container."
+      },
+      {
+        "label": "Run Project",
+        "type": "shell",
+        "command": "dotnet run",
+        "group": "test",
+        "problemMatcher": [],
+        "detail": "Run the .NET project inside the container."
+      },
+      {
+        "label": "Restore Dependencies",
+        "type": "shell",
+        "command": "dotnet restore",
+        "group": "test",
+        "problemMatcher": [],
+        "detail": "Restore dependencies for the project inside the container."
+      }
+    ]
+  }
+  

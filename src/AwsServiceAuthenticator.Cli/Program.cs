@@ -42,7 +42,7 @@ try
     {
         var helpText = argumentParserService.GenerateHelpText(
             parserResult,
-            heading: "AwsServiceAuthenticator.Cli",
+            heading: "AWS Service Authentication Tool",
             preOptionsLine: "Available commands:\n" + CommandHelper.GetAvailableCommands()
         );
         Console.WriteLine(helpText);

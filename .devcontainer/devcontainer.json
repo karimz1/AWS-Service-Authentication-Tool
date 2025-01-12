@@ -1,0 +1,21 @@
+{
+    "name": "C# (.NET) DevContainer",
+    "dockerFile": "Dockerfile",
+    "context": ".",
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash",
+      "editor.formatOnSave": true,
+      "editor.tabSize": 4
+    },
+    "extensions": [
+      "ms-dotnettools.csharp",
+      "visualstudioexptteam.vscodeintellicode",
+      "spmeesseman.vscode-taskexplorer"
+    ],
+    "postCreateCommand": "dotnet restore",
+    "tasks": {
+      "default": "Build Project"
+    },
+    "remoteUser": "vscode"
+  }
+  
