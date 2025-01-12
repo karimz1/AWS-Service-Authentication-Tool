@@ -7,8 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     
-    <!-- Ensure deterministic builds -->
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  <!-- Ensure deterministic builds -->
+  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
 
@@ -21,15 +21,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Physical path to the file in your repo -->
+    <!-- Physical path to the file -->
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <!-- Packaging settings -->
   <PropertyGroup>
     <Version>1.1.2</Version>
-
-    <!-- Set your own authors/company/etc. -->
     <Authors>Karim Zouine</Authors>
     <Company>KarimZ1</Company>
     <Product>awsat</Product>
