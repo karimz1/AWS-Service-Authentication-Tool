@@ -105,7 +105,24 @@ jobs:
       - name: Build and pack
         run: dotnet pack --configuration Release --output ./nupkg
 
+
+      - name: Debug NUGET_API_KEY
+        run: |
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo "NUGET_API_KEY is empty."
+            exit 1
+          else
+            echo "NUGET_API_KEY is present."
+          fi
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_ORG_API_KEY }}
+
+
       - name: Publish to NuGet
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_ORG_API_KEY }}
-        run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        run: |
+          dotnet nuget push ./nupkg/*.nupkg \
+            --api-key "$NUGET_API_KEY" \
+            --source "https://api.nuget.org/v3/index.json"
+
