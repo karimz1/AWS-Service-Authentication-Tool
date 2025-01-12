@@ -1,7 +1,5 @@
 # awsat (AWS Service Authentication Tool)
 
-[![Build and Release](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml/badge.svg)](https://github.com/karimz1/AWS-Service-Authentication-Tool/actions/workflows/release.yml)
-
 ## Overview
 
 Welcome to the **AWS Service Authentication Tool**, a cross-platform CLI tool for managing AWS CodeArtifact and ECR authentication tokens. This tool simplifies the process of logging into AWS services and managing authentication credentials.
