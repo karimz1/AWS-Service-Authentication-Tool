@@ -90,6 +90,7 @@ jobs:
   publish_nuget:
     needs: create_release
     runs-on: ubuntu-latest
+    environment: NugetOrg-Secret
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -115,12 +116,12 @@ jobs:
             echo "NUGET_API_KEY is present."
           fi
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_ORG_API_KEY }}
+          NUGET_API_KEY: ${{ secrets.NugetOrg-Secret.NUGET_ORG_API_KEY }}
 
 
-      - name: Publish to NuGet
+       - name: Publish to NuGet
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_ORG_API_KEY }}
+          NUGET_API_KEY: ${{ secrets.NugetOrg-Secret.NUGET_ORG_API_KEY }}
         run: |
           dotnet nuget push ./nupkg/*.nupkg \
             --api-key "$NUGET_API_KEY" \
