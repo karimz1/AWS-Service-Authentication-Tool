@@ -116,12 +116,12 @@ jobs:
             echo "NUGET_API_KEY is present."
           fi
         env:
-          NUGET_API_KEY: ${{ secrets.Personal.NUGET_ORG_API }}
+          NUGET_API_KEY: ${{ secrets.NUGET_ORG_API }}
 
 
       - name: Publish to NuGet
         env:
-          NUGET_API_KEY: ${{ secrets.Personal.NUGET_ORG_API }}
+          NUGET_API_KEY: ${{ secrets.NUGET_ORG_API }}
         run: |
           dotnet nuget push ./nupkg/*.nupkg \
             --api-key "$NUGET_API_KEY" \
