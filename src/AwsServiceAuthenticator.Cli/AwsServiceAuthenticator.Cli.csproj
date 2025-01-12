@@ -13,7 +13,13 @@
         <PackAsTool>true</PackAsTool>
         <PackageId>awsat</PackageId>
         <ToolCommandName>awsat</ToolCommandName>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Physical path to the file in your repo -->
+        <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    </ItemGroup>
 
     <!-- Packaging settings -->
     <PropertyGroup>
