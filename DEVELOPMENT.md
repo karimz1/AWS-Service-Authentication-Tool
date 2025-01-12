@@ -112,5 +112,5 @@ I welcome contributions! To get started:
 
 ## Licensing
 
-This project is licensed under the MIT License. For more details, see the [LICENSE](./LICENSE) file.
+This project is licensed under the MIT License. For more details, see the [https://github.com/karimz1/AWS-Service-Authentication-Tool/blob/main/LICENSE](./LICENSE) file.
 
