@@ -46,7 +46,7 @@ jobs:
         run: ${{ matrix.zip_command }}
 
       - name: Archive release files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}
           path: ${{ matrix.artifact_name }}
